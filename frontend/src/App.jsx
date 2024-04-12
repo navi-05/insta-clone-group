@@ -1,11 +1,12 @@
-import { SignedIn, SignedOut } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react'
 import Authentication from './components/Authentication'
+import Home from './pages/Home'
 
 function App() {
   return (
     <>
       <SignedIn>
-        <h1>User is signed in</h1>
+        <Home />
       </SignedIn>
       <SignedOut>
         <Authentication />
