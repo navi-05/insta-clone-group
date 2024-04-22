@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react'
+import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import Authentication from './components/Authentication'
 import Home from './pages/Home'
 
