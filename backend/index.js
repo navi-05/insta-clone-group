@@ -1,16 +1,24 @@
-import express from 'express'
+import express from "express";
+import cors from "cors";
+import multer from "multer";
 
-import dotenv from 'dotenv'
-import { connectToDB } from './db/index.js';
-dotenv.config()
-
-const PORT = process.env.PORT
+import dotenv from "dotenv";
+import { uploadImage } from "./utils/cloudinary.js";
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT;
 
-app.get('/', async (req, res) => {
-  await connectToDB()
-  res.send("Hello")
-})
+// MULTER
+const storage = new multer.memoryStorage();
+const multerUpload = multer({ storage }).single("file");
 
-app.listen(PORT, () => console.log(`Server started on port : ${PORT}`))
+// MIDDLEWARES
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+app.post("/api/upload", multerUpload, uploadImage);
+
+app.listen(PORT, () => console.log(`Server started on port : ${PORT}`));
+

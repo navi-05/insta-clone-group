@@ -14,10 +14,12 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
-        "sidebar": "1260px"
       },
     },
     extend: {
+      screens: {
+        sidebar: "1260px",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
