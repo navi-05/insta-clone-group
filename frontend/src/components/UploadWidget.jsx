@@ -38,7 +38,3 @@ const UploadWidget = ({ setImgUrl }) => {
 }
 
 export default UploadWidget
-
-// axios.post(`https://api.cloudinary.com/v1_1/${ddggaltio}/upload`, {
-  
-// })
