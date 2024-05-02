@@ -21,6 +21,7 @@ module.exports = {
         sidebar: "1260px",
       },
       colors: {
+        blue: "#0095f6",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

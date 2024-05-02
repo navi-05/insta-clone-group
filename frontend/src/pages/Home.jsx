@@ -1,5 +1,6 @@
 // HOME PAGE 
-import Sidebar from '@/components/Sidebar'
+import NewsFeed from '@/components/home/NewsFeed'
+import Sidebar from '@/components/shared/Sidebar'
 import React from 'react'
 
 const Home = () => {
@@ -14,7 +15,7 @@ const Home = () => {
 
         {/* Main Content */}
         <div>
-          Main Content
+          <NewsFeed />
         </div>
       </div>
 

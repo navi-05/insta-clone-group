@@ -1,7 +1,7 @@
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { Bell, Bookmark, Compass, Home, Instagram, Map, Menu, MessagesSquare, Search, Settings, Sun } from "lucide-react";
-import CreateModal from "./modals/CreateModal";
-import { Popover, PopoverContent, PopoverTrigger } from "./shad/ui/popover";
+import CreateModal from "../modals/CreateModal";
+import { Popover, PopoverContent, PopoverTrigger } from "../shad/ui/popover";
 
 // This is where your array should come (demoArray)
 const popupArray = [

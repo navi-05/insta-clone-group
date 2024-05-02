@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut } from '@clerk/clerk-react'
-import Authentication from './components/Authentication'
+import Authentication from './components/shared/Authentication'
 import Home from './pages/Home'
 
 function App() {

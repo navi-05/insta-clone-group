@@ -1,49 +1,60 @@
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/shad/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/shad/ui/dialog";
 import { PlusSquare } from "lucide-react";
-import { Separator } from "../shad/ui/separator";
+import { useState } from "react";
 
-import { UploadCloud } from "lucide-react";
-import UploadWidget from "../UploadWidget";
+import UploadWidget from "../create-post/UploadWidget";
+import AdditionalInfo from "../create-post/AdditionalInfo";
+import axios from "axios";
+import { toast } from "sonner";
+
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const CreateModal = () => {
-  const [imgUrl, setImgUrl] = useState(null);
+  const [postData, setPostData] = useState({
+    imgUrl: "",
+    caption: "",
+    location: "",
+  });
+
+  const [submitting, setSubmitting] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  async function createPost(e) {
+    e.preventDefault();
+
+    try {
+      setSubmitting(true);
+      const { data } = await axios.post(`${SERVER_URL}/insta-post`, postData);
+
+      if (data) {
+        toast.success("Post Created");
+        setOpen(false);
+        setPostData({});
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
-    <div>
-      <Dialog>
-        <DialogTrigger className="w-full p-3 rounded-lg flex gap-4 items-center hover:cursor-pointer hover:bg-neutral-200/50 transition-all focus-visible:outline-none">
-          <PlusSquare />
-          <p className="text-neutral-800 sidebar:block hidden">Create</p>
-        </DialogTrigger>
-        {!imgUrl ? (
-          <DialogContent>
-            <DialogHeader className="mx-auto">Create New Post</DialogHeader>
-            <Separator />
-            <div className="flex flex-col gap-4 items-center justify-center h-[500px]">
-              <UploadCloud className="w-16 h-16 text-neutral-600" />
-              <p className="font-semibold text-sm">
-                Drag photos and video here
-              </p>
-              <UploadWidget setImgUrl={setImgUrl} />
-            </div>
-          </DialogContent>
-        ) : (
-          <DialogContent>
-            <DialogHeader className="mx-auto">Additional Info</DialogHeader>
-            <Separator />
-            <div className="flex flex-col gap-4 items-center justify-center h-[500px]">
-              Image Uploaded
-            </div>
-          </DialogContent>
-        )}
-      </Dialog>
-    </div>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger className="w-full p-3 rounded-lg flex gap-4 items-center hover:cursor-pointer hover:bg-neutral-200/50 transition-all focus-visible:outline-none">
+        <PlusSquare />
+        <p className="text-neutral-800 sidebar:block hidden">Create</p>
+      </DialogTrigger>
+      {postData.imgUrl ? (
+        <AdditionalInfo
+          postData={postData}
+          setPostData={setPostData}
+          createPost={createPost}
+          submitting={submitting}
+        />
+      ) : (
+        <UploadWidget postData={postData} setPostData={setPostData} />
+      )}
+    </Dialog>
   );
 };
 

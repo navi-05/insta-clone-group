@@ -8,7 +8,7 @@ import { Toaster } from '@/components/shad/ui/sonner'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ClerkProvider>
-      <Toaster richColors/>
+      <Toaster />
       <App />
     </ClerkProvider>
   </React.StrictMode>,
