@@ -14,9 +14,7 @@ const Home = () => {
         <Sidebar />
 
         {/* Main Content */}
-        <div>
-          <NewsFeed />
-        </div>
+        <NewsFeed />
       </div>
 
     </div>

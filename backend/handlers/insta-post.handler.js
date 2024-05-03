@@ -1,4 +1,5 @@
 import { Post } from "../models/post.model.js";
+import { User } from "../models/user.model.js";
 
 /* 
   ? POST
@@ -7,17 +8,25 @@ import { Post } from "../models/post.model.js";
 */
 export const createPost = async (req, res) => {
   try {
-    // TODO: Handle auth
-    const { imgUrl, caption, location } = await req.body;
+    const { imgUrl, caption, location, clerkId } = await req.body;
 
-    if (!imgUrl || !caption || !location) {
+    if (!imgUrl || !caption || !location || !clerkId) {
       return res.status(400).json({ message: "Bad Request" });
     }
+
+    // TODO: Handle auth in server-side itself
+
+    const userExists = await User.find({ clerkId: clerkId });
+    if (userExists.length == 0)
+      return res.status(401).json({ message: "You're not Authenticated" });
+
+    const userId = userExists[0]._id;
 
     const newPost = await Post.create({
       caption,
       location,
       imgUrl,
+      userId
     });
 
     if (!newPost)
@@ -37,16 +46,15 @@ export const createPost = async (req, res) => {
 export const getPosts = async (req, res) => {
   try {
     // TODO: Handle auth
-    const posts = await Post.find({})
+    const posts = await Post.find({});
 
-    if(!posts) {
-      return res.status(400).json({ message: "Bad Request" })
+    if (!posts) {
+      return res.status(400).json({ message: "Bad Request" });
     }
 
-    return res.status(200).json({ posts })  
-
+    return res.status(200).json({ posts });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error " });
   }
-}
+};

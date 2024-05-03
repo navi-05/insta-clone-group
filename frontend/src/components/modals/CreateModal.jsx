@@ -6,6 +6,7 @@ import UploadWidget from "../create-post/UploadWidget";
 import AdditionalInfo from "../create-post/AdditionalInfo";
 import axios from "axios";
 import { toast } from "sonner";
+import { useUser } from "@clerk/clerk-react";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -16,15 +17,19 @@ const CreateModal = () => {
     location: "",
   });
 
-  const [submitting, setSubmitting] = useState(false);
+  const { user } = useUser()
   const [open, setOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   async function createPost(e) {
     e.preventDefault();
 
     try {
       setSubmitting(true);
-      const { data } = await axios.post(`${SERVER_URL}/insta-post`, postData);
+      const { data } = await axios.post(`${SERVER_URL}/insta-post`, {
+        ...postData,
+        clerkId: user.id
+      });
 
       if (data) {
         toast.success("Post Created");
