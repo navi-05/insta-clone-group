@@ -7,6 +7,7 @@ import AdditionalInfo from "../create-post/AdditionalInfo";
 import axios from "axios";
 import { toast } from "sonner";
 import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from 'react-router-dom'
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -18,6 +19,8 @@ const CreateModal = () => {
   });
 
   const { user } = useUser()
+  // const navigate = useNavigate()
+
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -35,6 +38,7 @@ const CreateModal = () => {
         toast.success("Post Created");
         setOpen(false);
         setPostData({});
+        // navigate(0)
       }
     } catch (error) {
       console.log(error);

@@ -14,8 +14,6 @@ export const createPost = async (req, res) => {
       return res.status(400).json({ message: "Bad Request" });
     }
 
-    // TODO: Handle auth in server-side itself
-
     const userExists = await User.find({ clerkId: clerkId });
     if (userExists.length == 0)
       return res.status(401).json({ message: "You're not Authenticated" });
@@ -46,7 +44,7 @@ export const createPost = async (req, res) => {
 export const getPosts = async (req, res) => {
   try {
     // TODO: Handle auth
-    const posts = await Post.find({});
+    const posts = await Post.find({}).populate('userId')
 
     if (!posts) {
       return res.status(400).json({ message: "Bad Request" });

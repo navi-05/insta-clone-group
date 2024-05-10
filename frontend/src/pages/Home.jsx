@@ -8,7 +8,7 @@ const Home = () => {
     <div>
 
       {/* Wrapper - Flex Container (Sidebar & Main Content) */}
-      <div className='flex flex-row'>
+      <div className='flex flex-row '>
 
         {/* Sidebar */}
         <Sidebar />
